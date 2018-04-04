@@ -1,0 +1,49 @@
+﻿@model Accounts.Models.AccountingPeriod.AccountingPeriodViewModel
+
+@{
+    ViewBag.Title = "Accounting Period";
+}
+
+<h2>Accounting Period</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountingPeriodID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountingPeriodID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValidFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValidFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ValidTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ValidTo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AccountingPeriodID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

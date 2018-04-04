@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AccountsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountingPeriod">
+          <Key>
+            <PropertyRef Name="AccountingPeriodID" />
+          </Key>
+          <Property Name="AccountingPeriodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="ValidFrom" Type="date" />
+          <Property Name="ValidTo" Type="date" />
+        </EntityType>
+        <EntityType Name="AssetType">
+          <Key>
+            <PropertyRef Name="AssetTypeID" />
+          </Key>
+          <Property Name="AssetTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="2000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="JournalID" />
+          </Key>
+          <Property Name="JournalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JournalTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JournalType">
+          <Key>
+            <PropertyRef Name="JournalTypeID" />
+          </Key>
+          <Property Name="JournalTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="2000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Posting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="JournalID" Type="int" Nullable="false" />
+          <Property Name="AccountingPeriodID" Type="int" Nullable="false" />
+          <Property Name="AssetTypeID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Journal_JournalType">
+          <End Role="JournalType" Type="Self.JournalType" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JournalType">
+              <PropertyRef Name="JournalTypeID" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="JournalTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_AccountingPeriod">
+          <End Role="AccountingPeriod" Type="Self.AccountingPeriod" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountingPeriod">
+              <PropertyRef Name="AccountingPeriodID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="AccountingPeriodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_AssetType">
+          <End Role="AssetType" Type="Self.AssetType" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetType">
+              <PropertyRef Name="AssetTypeID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="AssetTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_Journal">
+          <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="JournalID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="JournalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AccountsModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountingPeriod" EntityType="Self.AccountingPeriod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetType" EntityType="Self.AssetType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Journal" EntityType="Self.Journal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JournalType" EntityType="Self.JournalType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Posting" EntityType="Self.Posting" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Journal_JournalType" Association="Self.FK_Journal_JournalType">
+            <End Role="JournalType" EntitySet="JournalType" />
+            <End Role="Journal" EntitySet="Journal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_Account" Association="Self.FK_Posting_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Posting" EntitySet="Posting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_AccountingPeriod" Association="Self.FK_Posting_AccountingPeriod">
+            <End Role="AccountingPeriod" EntitySet="AccountingPeriod" />
+            <End Role="Posting" EntitySet="Posting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_AssetType" Association="Self.FK_Posting_AssetType">
+            <End Role="AssetType" EntitySet="AssetType" />
+            <End Role="Posting" EntitySet="Posting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_Journal" Association="Self.FK_Posting_Journal">
+            <End Role="Journal" EntitySet="Journal" />
+            <End Role="Posting" EntitySet="Posting" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AccountsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Postings" Relationship="Self.FK_Posting_Account" FromRole="Account" ToRole="Posting" />
+        </EntityType>
+        <EntityType Name="AccountingPeriod">
+          <Key>
+            <PropertyRef Name="AccountingPeriodID" />
+          </Key>
+          <Property Name="AccountingPeriodID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ValidFrom" Type="DateTime" Precision="0" />
+          <Property Name="ValidTo" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Postings" Relationship="Self.FK_Posting_AccountingPeriod" FromRole="AccountingPeriod" ToRole="Posting" />
+        </EntityType>
+        <EntityType Name="AssetType">
+          <Key>
+            <PropertyRef Name="AssetTypeID" />
+          </Key>
+          <Property Name="AssetTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Postings" Relationship="Self.FK_Posting_AssetType" FromRole="AssetType" ToRole="Posting" />
+        </EntityType>
+        <EntityType Name="Journal">
+          <Key>
+            <PropertyRef Name="JournalID" />
+          </Key>
+          <Property Name="JournalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JournalTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="JournalType" Relationship="Self.FK_Journal_JournalType" FromRole="Journal" ToRole="JournalType" />
+          <NavigationProperty Name="Postings" Relationship="Self.FK_Posting_Journal" FromRole="Journal" ToRole="Posting" />
+        </EntityType>
+        <EntityType Name="JournalType">
+          <Key>
+            <PropertyRef Name="JournalTypeID" />
+          </Key>
+          <Property Name="JournalTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Journals" Relationship="Self.FK_Journal_JournalType" FromRole="JournalType" ToRole="Journal" />
+        </EntityType>
+        <EntityType Name="Posting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="JournalID" Type="Int32" Nullable="false" />
+          <Property Name="AccountingPeriodID" Type="Int32" Nullable="false" />
+          <Property Name="AssetTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Self.FK_Posting_Account" FromRole="Posting" ToRole="Account" />
+          <NavigationProperty Name="AccountingPeriod" Relationship="Self.FK_Posting_AccountingPeriod" FromRole="Posting" ToRole="AccountingPeriod" />
+          <NavigationProperty Name="AssetType" Relationship="Self.FK_Posting_AssetType" FromRole="Posting" ToRole="AssetType" />
+          <NavigationProperty Name="Journal" Relationship="Self.FK_Posting_Journal" FromRole="Posting" ToRole="Journal" />
+        </EntityType>
+        <Association Name="FK_Posting_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_AccountingPeriod">
+          <End Role="AccountingPeriod" Type="Self.AccountingPeriod" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountingPeriod">
+              <PropertyRef Name="AccountingPeriodID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="AccountingPeriodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_AssetType">
+          <End Role="AssetType" Type="Self.AssetType" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetType">
+              <PropertyRef Name="AssetTypeID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="AssetTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Journal_JournalType">
+          <End Role="JournalType" Type="Self.JournalType" Multiplicity="1" />
+          <End Role="Journal" Type="Self.Journal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JournalType">
+              <PropertyRef Name="JournalTypeID" />
+            </Principal>
+            <Dependent Role="Journal">
+              <PropertyRef Name="JournalTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Posting_Journal">
+          <End Role="Journal" Type="Self.Journal" Multiplicity="1" />
+          <End Role="Posting" Type="Self.Posting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journal">
+              <PropertyRef Name="JournalID" />
+            </Principal>
+            <Dependent Role="Posting">
+              <PropertyRef Name="JournalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AccountsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="AccountingPeriods" EntityType="Self.AccountingPeriod" />
+          <EntitySet Name="AssetTypes" EntityType="Self.AssetType" />
+          <EntitySet Name="Journals" EntityType="Self.Journal" />
+          <EntitySet Name="JournalTypes" EntityType="Self.JournalType" />
+          <EntitySet Name="Postings" EntityType="Self.Posting" />
+          <AssociationSet Name="FK_Posting_Account" Association="Self.FK_Posting_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Posting" EntitySet="Postings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_AccountingPeriod" Association="Self.FK_Posting_AccountingPeriod">
+            <End Role="AccountingPeriod" EntitySet="AccountingPeriods" />
+            <End Role="Posting" EntitySet="Postings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_AssetType" Association="Self.FK_Posting_AssetType">
+            <End Role="AssetType" EntitySet="AssetTypes" />
+            <End Role="Posting" EntitySet="Postings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Journal_JournalType" Association="Self.FK_Journal_JournalType">
+            <End Role="JournalType" EntitySet="JournalTypes" />
+            <End Role="Journal" EntitySet="Journals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Posting_Journal" Association="Self.FK_Posting_Journal">
+            <End Role="Journal" EntitySet="Journals" />
+            <End Role="Posting" EntitySet="Postings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AccountsModelStoreContainer" CdmEntityContainer="AccountsEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="AccountsModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountingPeriods">
+            <EntityTypeMapping TypeName="AccountsModel.AccountingPeriod">
+              <MappingFragment StoreEntitySet="AccountingPeriod">
+                <ScalarProperty Name="AccountingPeriodID" ColumnName="AccountingPeriodID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetTypes">
+            <EntityTypeMapping TypeName="AccountsModel.AssetType">
+              <MappingFragment StoreEntitySet="AssetType">
+                <ScalarProperty Name="AssetTypeID" ColumnName="AssetTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journals">
+            <EntityTypeMapping TypeName="AccountsModel.Journal">
+              <MappingFragment StoreEntitySet="Journal">
+                <ScalarProperty Name="JournalID" ColumnName="JournalID" />
+                <ScalarProperty Name="JournalTypeID" ColumnName="JournalTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JournalTypes">
+            <EntityTypeMapping TypeName="AccountsModel.JournalType">
+              <MappingFragment StoreEntitySet="JournalType">
+                <ScalarProperty Name="JournalTypeID" ColumnName="JournalTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postings">
+            <EntityTypeMapping TypeName="AccountsModel.Posting">
+              <MappingFragment StoreEntitySet="Posting">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="JournalID" ColumnName="JournalID" />
+                <ScalarProperty Name="AccountingPeriodID" ColumnName="AccountingPeriodID" />
+                <ScalarProperty Name="AssetTypeID" ColumnName="AssetTypeID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

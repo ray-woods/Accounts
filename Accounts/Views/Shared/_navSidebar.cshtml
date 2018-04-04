@@ -1,0 +1,116 @@
+﻿<div id="accordion">
+
+    <div class="card">
+        <div class="card-header" id="headingTransaction">
+            <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTransaction" aria-expanded="false" aria-controls="collapseTransaction">
+                    Transactions
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseTransaction" class="collapse collapsed" aria-labelledby="headingTransaction" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="~/Transaction/Deposit">Deposit</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="~/Transaction/Withdraw">Withdraw</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="~/Transaction/Transfer">Transfer</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingAccount">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseAccount" aria-expanded="false" aria-controls="collapseAccount">
+                    Accounts
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseAccount" class="collapse" aria-labelledby="headingAccount" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="~/Account/Index">Accounts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingAccountingPeriod">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseAccountingPeriod" aria-expanded="false" aria-controls="collapseAccountingPeriod">
+                    Accounting Periods
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseAccountingPeriod" class="collapse" aria-labelledby="headingAccountingPeriod" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="~/AccountingPeriod/Index">Accounting Periods</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingAssetType">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseAssetType" aria-expanded="false" aria-controls="collapseAssetType">
+                    Asset Types
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseAssetType" class="collapse" aria-labelledby="headingAssetType" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="~/AssetType/Index">Asset Types</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="headingReport">
+            <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseReport" aria-expanded="false" aria-controls="collapseReport">
+                    Reports
+                </button>
+            </h5>
+        </div>
+
+        <div id="collapseReport" class="collapse" aria-labelledby="headingReport" data-parent="#accordion">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="~/Report/TrialBalance">Trial Balance</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="~/Report/Journal">Journal</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-control">
+        <a href="~/User/Logout">Log Out</a>
+    </div>
+
+</div>

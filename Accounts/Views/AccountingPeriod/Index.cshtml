@@ -1,0 +1,68 @@
+﻿@model Accounts.Models.AccountingPeriod.AccountingPeriodsViewModel
+
+@{
+    ViewBag.Title = "Accounting Periods";
+}
+
+<h2>Accounting Periods</h2>
+
+<p>
+    @Html.ActionLink("Create New Accounting Period", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingPeriods[0].AccountingPeriodID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingPeriods[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingPeriods[0].ValidFrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountingPeriods[0].ValidTo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.AccountingPeriods)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountingPeriodID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValidFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValidTo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AccountingPeriodID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AccountingPeriodID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AccountingPeriodID }, new { @class = "deleteAccountingPeriod" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('.deleteAccountingPeriod').on('click', function (e) {
+                var ok = confirm("Are you sure you want to delete this Accounting Period?");
+                if (ok === false)
+                    e.preventDefault();
+            });
+
+        });
+
+    </script>
+}

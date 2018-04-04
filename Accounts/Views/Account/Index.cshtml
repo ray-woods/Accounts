@@ -1,0 +1,62 @@
+﻿@model Accounts.Models.Account.AccountsViewModel
+
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<h2>Accounts</h2>
+
+<p>
+    @Html.ActionLink("Create New Account", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Accounts[0].AccountID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Accounts[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Accounts[0].AccountTypeID)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Accounts)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.AccountTypes.FirstOrDefault(f => f.Value == item.AccountTypeID.ToString()).Text)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.AccountID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.AccountID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AccountID }, new { @class = "deleteAccount" })
+        </td>
+    </tr>
+    }
+
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('.deleteAccount').on('click', function (e) {
+                var ok = confirm("Are you sure you want to delete this account?");
+                if (ok === false)
+                    e.preventDefault();
+            });
+
+        });
+
+    </script>
+}
